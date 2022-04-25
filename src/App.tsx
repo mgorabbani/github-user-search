@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Container, Grid, Pagination, Paper, TablePagination } from '@mui/material'
+import React from 'react'
+import ResultView from './components/ResultView'
+import SearchBar from './components/SearchBar'
 
 function App() {
+  const [searchTerm, setSearchTerm] = React.useState('')
+  const [results, setResults] = React.useState()
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState()
+  const [page, setPage] = React.useState(0)
+  const handleValue = async (value: string) => {
+    setLoading(true)
+  }
+
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage)
+  }
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPage(0)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container maxWidth='sm' style={{ marginTop: 8 }}>
+      <Grid container spacing={[2]} direction='column' alignItems='center'>
+        <Grid item xs={12}>
+          <SearchBar submitValue={handleValue} />
+        </Grid>
+        <Grid item xs={12}>
+          <ResultView />
+          <Paper>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component='div'
+              count={100}
+              rowsPerPage={5}
+              page={1}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+  )
 }
 
-export default App;
+export default App
