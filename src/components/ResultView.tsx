@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { Divider, TablePagination, Typography } from '@mui/material'
+import { Divider, TablePagination, TableSortLabel, Typography } from '@mui/material'
 
 export type User = {
   login: string
@@ -26,8 +26,9 @@ export type User = {
   events_url: string
   received_events_url: string
   type: string
-  site_admin: boolean
 }
+
+type Order = 'asc' | 'desc'
 
 export default function ResultView({
   data,
@@ -43,13 +44,31 @@ export default function ResultView({
     newPage: number,
   ) => void
 }) {
+  const [order, setOrder] = React.useState<Order>('asc')
+
+  const handleSort = () => {
+    setOrder(order === 'asc' ? 'desc' : 'asc')
+  }
+
+  function sortByLogin(a: User, b: User) {
+    if (order === 'asc') {
+      return a.login.localeCompare(b.login)
+    } else {
+      return b.login.localeCompare(a.login)
+    }
+  }
+
   return (
     <Paper>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+        <Table sx={{ minWidth: 650 }} aria-label='table'>
           <TableHead>
             <TableRow>
-              <TableCell>User Name</TableCell>
+              <TableCell>
+                <TableSortLabel active={true} direction={order} onClick={handleSort}>
+                  Login
+                </TableSortLabel>
+              </TableCell>
               <TableCell align='right'>Type</TableCell>
               <TableCell align='right'>Avatar</TableCell>
             </TableRow>
@@ -62,7 +81,7 @@ export default function ResultView({
                 </TableCell>
               </TableRow>
             )}
-            {data.map((user) => (
+            {data.sort(sortByLogin).map((user) => (
               <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component='th' scope='row'>
                   <a href={user.html_url}>{user.login}</a>
