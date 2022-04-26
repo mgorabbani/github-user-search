@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { Divider, TablePagination, Typography } from '@mui/material'
 
 export type User = {
   login: string
@@ -28,34 +29,63 @@ export type User = {
   site_admin: boolean
 }
 
-export default function ResultView({ data }: { data: User[] }) {
+export default function ResultView({
+  data,
+  totalCount,
+  currentPage,
+  handleChangePage,
+}: {
+  data: User[]
+  totalCount: number
+  currentPage: number
+  handleChangePage: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    newPage: number,
+  ) => void
+}) {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align='right'>Calories</TableCell>
-            <TableCell align='right'>Fat&nbsp;(g)</TableCell>
-            <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
-            <TableCell align='right'>Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((user) => (
-            <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component='th' scope='row'>
-                <a href={user.html_url}>{user.login}</a>
-              </TableCell>
-
-              <TableCell align='right'>{user.type}</TableCell>
-              <TableCell align='right'>
-                <img src={user.avatar_url} alt={user.login} height={50} />
-              </TableCell>
+    <Paper>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+          <TableHead>
+            <TableRow>
+              <TableCell>User Name</TableCell>
+              <TableCell align='right'>Type</TableCell>
+              <TableCell align='right'>Avatar</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {totalCount === 0 && (
+              <TableRow>
+                <TableCell>
+                  <Typography>No results found</Typography>
+                </TableCell>
+              </TableRow>
+            )}
+            {data.map((user) => (
+              <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component='th' scope='row'>
+                  <a href={user.html_url}>{user.login}</a>
+                </TableCell>
+
+                <TableCell align='right'>{user.type}</TableCell>
+                <TableCell align='right'>
+                  <img src={user.avatar_url} alt={user.login} height={50} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Divider />
+        <TablePagination
+          rowsPerPageOptions={[9]}
+          component='div'
+          count={totalCount}
+          rowsPerPage={9}
+          page={currentPage - 1}
+          onPageChange={handleChangePage}
+        />
+      </TableContainer>
+    </Paper>
   )
 }

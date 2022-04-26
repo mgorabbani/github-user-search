@@ -3,7 +3,7 @@ import axios from 'axios'
 // move it to config
 export const API_URL = 'https://api.github.com/search/'
 
-export const searchUser = async ({
+export const getSearchUser = async ({
   login,
   page = 1,
   perPage = 9,
