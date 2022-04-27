@@ -84,7 +84,7 @@ function RootPage() {
         autoHideDuration={3000}
         TransitionComponent={(props: SlideProps) => <Slide {...props} direction='up' />}
       >
-        <Alert severity='error' sx={{ width: '100%' }}>
+        <Alert severity='error' sx={{ width: '100%' }} role='alert'>
           {error}
         </Alert>
       </Snackbar>

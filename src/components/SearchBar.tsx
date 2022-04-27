@@ -31,9 +31,8 @@ const SearchBar = ({ submitValue }: SearchBarProps) => {
         value={value}
         autoFocus
         onChange={handleChange}
-        inputProps={{ 'aria-label': 'search google maps' }}
       />
-      <IconButton type='submit' sx={{ p: '10px' }} aria-label='search'>
+      <IconButton type='submit' sx={{ p: '10px' }} aria-label='search' role='search'>
         <SearchIcon />
       </IconButton>
     </Paper>

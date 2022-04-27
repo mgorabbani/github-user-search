@@ -83,7 +83,7 @@ export default function ResultView({
             )}
             {data.sort(sortByLogin).map((user) => (
               <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component='th' scope='row'>
+                <TableCell component='th' scope='row' role='login'>
                   <a href={user.html_url}>{user.login}</a>
                 </TableCell>
 
