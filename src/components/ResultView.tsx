@@ -39,10 +39,7 @@ export default function ResultView({
   data: User[]
   totalCount: number
   currentPage: number
-  handleChangePage: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-    newPage: number,
-  ) => void
+  handleChangePage: (newPage: number) => void
 }) {
   const [order, setOrder] = React.useState<Order>('asc')
 
@@ -102,7 +99,7 @@ export default function ResultView({
           count={totalCount}
           rowsPerPage={9}
           page={currentPage - 1}
-          onPageChange={handleChangePage}
+          onPageChange={(event, page) => handleChangePage(page)}
         />
       </TableContainer>
     </Paper>

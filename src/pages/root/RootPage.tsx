@@ -13,14 +13,14 @@ import ResultView, { User } from '../../components/ResultView'
 import SearchBar from '../../components/SearchBar'
 import { getSearchUser } from '../../utils/api'
 
-type UserResponse = {
+type SearchResponse = {
   incomplete_results: boolean
   items: Array<User>
   total_count: number
 }
 
 function RootPage() {
-  const [results, setResults] = React.useState<UserResponse>()
+  const [results, setResults] = React.useState<SearchResponse>()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState()
   const [page, setPage] = React.useState(1)
@@ -28,10 +28,10 @@ function RootPage() {
 
   const searchUser = useCallback(async () => {
     setLoading(true)
+    setError(undefined)
     try {
       const data = await getSearchUser({ login: searchTerm, page })
       setResults(data)
-      setError(undefined)
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -43,10 +43,7 @@ function RootPage() {
     setSearchTerm(login)
   }
 
-  const handleChangePage = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-    newPage: number,
-  ) => {
+  const handleChangePage = async (newPage: number) => {
     setPage(newPage + 1)
   }
 
