@@ -10,7 +10,7 @@ import MockData from '../../__fixtures__/search-users.json'
 const API_URL = process.env.REACT_APP_API_URL
 
 const server = setupServer(
-  rest.get(API_URL + '/users', (req, res, ctx) => {
+  rest.get(API_URL + '/search/users', (req, res, ctx) => {
     return res(ctx.json(MockData))
   }),
 )
@@ -26,7 +26,7 @@ test('loads and displays no results found', async () => {
 })
 test('search users by username and list on the table with autofocus', async () => {
   server.use(
-    rest.get(API_URL + '/users', (req, res, ctx) => {
+    rest.get(API_URL + '/search/users', (req, res, ctx) => {
       return res(ctx.json(MockData))
     }),
   )
@@ -79,7 +79,7 @@ test('pagination on table and sorting', async () => {
 
 test('handles server error', async () => {
   server.use(
-    rest.get(API_URL + '/users', (req, res, ctx) => {
+    rest.get(API_URL + '/search/users', (req, res, ctx) => {
       return res(ctx.status(500))
     }),
   )

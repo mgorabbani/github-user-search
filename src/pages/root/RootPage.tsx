@@ -8,30 +8,25 @@ import {
   CircularProgress,
   Snackbar,
 } from '@mui/material'
-import React, { useCallback, useEffect } from 'react'
-import ResultView, { User } from '../../components/ResultView'
+import React, { useCallback, useEffect, useState } from 'react'
+import Results from '../../components/Results'
 import SearchBar from '../../components/SearchBar'
+import { UserResponse } from '../../types'
 import { getSearchUser } from '../../utils/api'
 
-type SearchResponse = {
-  incomplete_results: boolean
-  items: Array<User>
-  total_count: number
-}
-
 function RootPage() {
-  const [results, setResults] = React.useState<SearchResponse>()
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState()
-  const [page, setPage] = React.useState(1)
-  const [searchTerm, setSearchTerm] = React.useState('')
+  const [results, setResults] = useState<UserResponse>()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState()
+  const [page, setPage] = useState(1)
+  const [searchTerm, setSearchTerm] = useState('')
 
   const searchUser = useCallback(async () => {
     setLoading(true)
-    setError(undefined)
     try {
       const data = await getSearchUser({ login: searchTerm, page })
       setResults(data)
+      setError(undefined)
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -66,7 +61,7 @@ function RootPage() {
               <CircularProgress />
             </Box>
           ) : (
-            <ResultView
+            <Results
               data={results?.items || []}
               currentPage={page}
               handleChangePage={handleChangePage}
