@@ -56,18 +56,13 @@ function RootPage() {
         </Grid>
 
         <Grid item xs={12}>
-          {loading ? (
-            <Box sx={{ width: '100%', height: '30px' }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            <Results
-              data={results?.items || []}
-              currentPage={page}
-              handleChangePage={handleChangePage}
-              totalCount={results?.total_count || 0}
-            />
-          )}
+          <Results
+            loading={loading}
+            data={results?.items}
+            currentPage={page}
+            handleChangePage={handleChangePage}
+            totalCount={results?.total_count || 0}
+          />
         </Grid>
       </Grid>
 

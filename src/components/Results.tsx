@@ -6,26 +6,47 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { Divider, TablePagination, TableSortLabel, Typography } from '@mui/material'
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  TablePagination,
+  TableSortLabel,
+  Typography,
+} from '@mui/material'
 import { Order, User } from '../types'
 import UserRow from './UserRow'
 import { sortByUsername } from '../utils/sortByUsername'
 
 type Props = {
-  data: User[]
+  data?: User[]
   totalCount: number
   currentPage: number
+  loading: boolean
   handleChangePage: (newPage: number) => void
 }
 
-export default function Results({ data, totalCount, currentPage, handleChangePage }: Props) {
+export default function Results({
+  data,
+  totalCount,
+  currentPage,
+  handleChangePage,
+  loading,
+}: Props) {
   const [order, setOrder] = useState<Order>('asc')
 
   const handleSort = () => {
     setOrder(order === 'asc' ? 'desc' : 'asc')
   }
 
-  if (!data.length) {
+  if (loading) {
+    return (
+      <Box sx={{ width: '100%', height: '30px' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
+  if (!data) {
     return null
   }
 
@@ -36,7 +57,12 @@ export default function Results({ data, totalCount, currentPage, handleChangePag
           <TableHead>
             <TableRow>
               <TableCell>
-                <TableSortLabel active direction={order} onClick={handleSort}>
+                <TableSortLabel
+                  active
+                  direction={order}
+                  onClick={handleSort}
+                  role='username-header'
+                >
                   Username
                 </TableSortLabel>
               </TableCell>
