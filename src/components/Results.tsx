@@ -64,7 +64,7 @@ export default function Results({
           [matches ? 'maxWidth' : 'width']: '100%',
         }}
       >
-        <Table aria-label='table' size='small'>
+        <Table aria-label='table' size='small' stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>
