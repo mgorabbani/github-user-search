@@ -1,4 +1,15 @@
-# Getting Started with Create React App
+# Github User search app
+
+This app has a very simple feature of searching users by their username and list them into a table
+
+## Features
+
+    - Search by username
+    - List Result Table
+    - Pagination
+    - Sort by username
+    - very basic responsiveness
+    
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -17,8 +28,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-## Tests
-
 ### `yarn test`
 
 This app has basic some functional unit tests and some integration tests
@@ -32,15 +41,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Github User search app
-
-This app has a very simple feature of searching users by their username and list them into a table
-
-## Features
-
-    - Search by username
-    - List Result Table
-    - Pagination
-    - Sort by username
-    - very basic responsiveness
