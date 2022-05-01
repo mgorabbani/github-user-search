@@ -14,6 +14,9 @@ import {
   TableSortLabel,
   Typography,
 } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 import { Order, User } from '../types'
 import UserRow from './UserRow'
 import { sortByUsername } from '../utils/sortByUsername'
@@ -34,6 +37,8 @@ export default function Results({
   loading,
 }: Props) {
   const [order, setOrder] = useState<Order>('asc')
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   const handleSort = () => {
     setOrder(order === 'asc' ? 'desc' : 'asc')
@@ -52,7 +57,13 @@ export default function Results({
 
   return (
     <Paper>
-      <TableContainer component={Paper}>
+      <TableContainer
+        sx={{
+          height: 500,
+          width: 600,
+          [matches ? 'maxWidth' : 'width']: '100%',
+        }}
+      >
         <Table aria-label='table' size='small'>
           <TableHead>
             <TableRow>
@@ -84,16 +95,16 @@ export default function Results({
             ))}
           </TableBody>
         </Table>
-        <Divider />
-        <TablePagination
-          rowsPerPageOptions={[9]}
-          component='div'
-          count={totalCount}
-          rowsPerPage={9}
-          page={currentPage - 1}
-          onPageChange={(event, page) => handleChangePage(page)}
-        />
       </TableContainer>
+      <Divider />
+      <TablePagination
+        rowsPerPageOptions={[9]}
+        component='div'
+        count={totalCount}
+        rowsPerPage={9}
+        page={currentPage - 1}
+        onPageChange={(event, page) => handleChangePage(page)}
+      />
     </Paper>
   )
 }

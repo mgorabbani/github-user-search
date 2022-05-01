@@ -1,13 +1,4 @@
-import {
-  Alert,
-  Box,
-  Container,
-  Grid,
-  Slide,
-  SlideProps,
-  CircularProgress,
-  Snackbar,
-} from '@mui/material'
+import { Alert, Container, Grid, Slide, SlideProps, Snackbar } from '@mui/material'
 import React, { useCallback, useEffect, useState } from 'react'
 import Results from '../../components/Results'
 import SearchBar from '../../components/SearchBar'
@@ -35,6 +26,11 @@ function RootPage() {
   }, [page, searchTerm])
 
   const handleValue = async (login: string) => {
+    if (!login.trim()) {
+      setResults(undefined)
+      return
+    }
+
     setSearchTerm(login)
   }
 
@@ -49,7 +45,7 @@ function RootPage() {
   }, [searchTerm, searchUser, page])
 
   return (
-    <Container maxWidth='sm' style={{ marginTop: 8 }}>
+    <Container maxWidth='md' sx={{ mt: 8 }}>
       <Grid container spacing={[2]} direction='column' alignItems='center'>
         <Grid item xs={12}>
           <SearchBar submitValue={handleValue} />
