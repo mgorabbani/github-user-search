@@ -17,6 +17,10 @@ const SearchBar = ({ submitValue }: SearchBarProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!value.trim()) {
+      return
+    }
+
     submitValue(value)
   }
   return (
